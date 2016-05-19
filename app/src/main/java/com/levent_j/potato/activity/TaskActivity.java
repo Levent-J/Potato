@@ -61,6 +61,11 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
             }
         };
 
+
+        //getLayout获取数据并填充
+    }
+
+    private void initTask() {
         AfterStudyTask = new TimerTask() {
             @Override
             public void run() {
@@ -87,7 +92,6 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
                 handler.sendMessage(message);
             }
         };
-        //getLayout获取数据并填充
     }
 
     @Override
@@ -99,6 +103,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_task_start:
+                initTask();
                 timer.schedule(AfterStudyTask,3000);
                 break;
         }
