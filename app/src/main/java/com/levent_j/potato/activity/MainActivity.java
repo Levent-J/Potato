@@ -3,6 +3,8 @@ package com.levent_j.potato.activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.levent_j.potato.R;
+import com.levent_j.potato.adapter.TaskAdapter;
 import com.levent_j.potato.base.BaseActivity;
+import com.levent_j.potato.bean.Task;
+import com.levent_j.potato.utils.SGDecoration;
 
 import butterknife.Bind;
 
@@ -25,6 +30,10 @@ public class MainActivity extends BaseActivity
     @Bind(R.id.fab) FloatingActionButton fab;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Bind(R.id.nav_view) NavigationView navigationView;
+    @Bind(R.id.rv_task_list) RecyclerView taskRecyclerView;
+
+    private TaskAdapter taskAdapter;
+    private int spacingInPixels;
 
 
     @Override
@@ -34,6 +43,13 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void init() {
+        taskAdapter = new TaskAdapter(this);
+        taskRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        spacingInPixels = getResources().getDimensionPixelSize(R.dimen.hero);
+        taskRecyclerView.addItemDecoration(new SGDecoration(spacingInPixels));
+        taskRecyclerView.setHasFixedSize(true);
+        taskRecyclerView.setAdapter(taskAdapter);
+
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -110,6 +126,10 @@ public class MainActivity extends BaseActivity
             case R.id.fab:
                 Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Task task = new Task();
+                task.setTitle("XXX");
+                task.setMessage("XXXXXXXXXX");
+                taskAdapter.updateTaskList(task);
                 break;
         }
     }
