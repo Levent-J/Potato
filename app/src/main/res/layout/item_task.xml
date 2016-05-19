@@ -11,21 +11,27 @@
     card_view:cardElevation="4dp">
 
     <LinearLayout
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
         <TextView
+            android:textSize="14sp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="title"
+            android:textColor="@color/btn_text_white"
             android:id="@+id/tv_task_item_title"/>
         <TextView
+            android:textSize="16sp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="false"
             android:text="message"
+            android:textColor="@color/btn_text_white"
             android:id="@+id/tv_task_item_message"/>
     </LinearLayout>
 

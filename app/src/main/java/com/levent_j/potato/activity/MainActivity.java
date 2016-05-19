@@ -1,10 +1,15 @@
 package com.levent_j.potato.activity;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.levent_j.potato.R;
 import com.levent_j.potato.adapter.TaskAdapter;
@@ -55,6 +62,20 @@ public class MainActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        initData();
+    }
+
+    private void initData() {
+        if (getIntent().getBooleanExtra("tag",false)){
+            Task task = new Task();
+            task.setTitle(getIntent().getStringExtra("title"));
+            task.setMessage(getIntent().getStringExtra("message"));
+            task.setStudy(Integer.parseInt(getIntent().getStringExtra("study")));
+            task.setReview(Integer.parseInt(getIntent().getStringExtra("review")));
+            task.setRest(Integer.parseInt(getIntent().getStringExtra("rest")));
+            taskAdapter.updateTaskList(task);
+        }
     }
 
     @Override
@@ -124,13 +145,10 @@ public class MainActivity extends BaseActivity
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab:
-                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Task task = new Task();
-                task.setTitle("XXX");
-                task.setMessage("XXXXXXXXXX");
-                taskAdapter.updateTaskList(task);
+                startActivity(new Intent(MainActivity.this,EditorActivity.class));
                 break;
         }
     }
+
+
 }

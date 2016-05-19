@@ -1,6 +1,7 @@
 package com.levent_j.potato.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
+import com.levent_j.potato.activity.TaskActivity;
 import com.levent_j.potato.bean.Task;
 
 import java.util.ArrayList;
@@ -42,12 +44,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.mViewHolder>{
 
     @Override
     public void onBindViewHolder(mViewHolder holder, int position) {
-        Task task = taskList.get(position);
+        final Task task = taskList.get(position);
         holder.mTitle.setText(task.getTitle());
         holder.mMessage.setText(task.getMessage());
         ViewGroup.LayoutParams cardViewLayouParams = holder.cardView.getLayoutParams();
         cardViewLayouParams.width = getItemWidth();
         cardViewLayouParams.height = getItemWidth();
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, TaskActivity.class);
+                intent.putExtra("tag",true);
+                intent.putExtra("title",task.getTitle());
+                intent.putExtra("message",task.getMessage());
+                intent.putExtra("study",task.getStudy());
+                intent.putExtra("review",task.getReview());
+                intent.putExtra("rest",task.getRest());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

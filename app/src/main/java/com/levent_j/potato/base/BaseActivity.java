@@ -2,6 +2,7 @@ package com.levent_j.potato.base;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 import android.os.Bundle;
 
@@ -22,6 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         init();
         setListener();
         TAG = this.getClass().getSimpleName();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     protected abstract int getLayoutId();

@@ -23,6 +23,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.tv_task_duration_review) TextView mDurationReview;
     @Bind(R.id.tv_task_duration_rest) TextView mDurationRest;
     @Bind(R.id.btn_task_start) Button mStartTask;
+    @Bind(R.id.tv_toolbar_title) TextView mToolBar;
 
     private Timer timer;
     private TimerTask AfterStudyTask;
@@ -37,6 +38,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void init() {
+        mToolBar.setText("任务详情");
         timer = new Timer();
         handler = new android.os.Handler(){
             @Override
@@ -63,6 +65,17 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
 
 
         //getLayout获取数据并填充
+        initData();
+    }
+
+    private void initData() {
+        if (getIntent().getBooleanExtra("tag",false)){
+            mTitle.setText(getIntent().getStringExtra("title"));
+            mMessage.setText(getIntent().getStringExtra("message"));
+            mDurationStudy.setText(getIntent().getIntExtra("study", 0)+"分钟");
+            mDurationReview.setText(getIntent().getIntExtra("review",0)+"分钟");
+            mDurationRest.setText(getIntent().getIntExtra("rest",0)+"分钟");
+        }
     }
 
     private void initTask() {
