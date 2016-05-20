@@ -61,6 +61,7 @@ public class EditorActivity extends BaseActivity{
                     intent.putExtra("study", mDurationStudy.getText().toString().trim());
                     intent.putExtra("review", mDurationReview.getText().toString().trim());
                     intent.putExtra("rest", mDurationRest.getText().toString().trim());
+                    finish();
                     startActivity(intent);
                 }
 

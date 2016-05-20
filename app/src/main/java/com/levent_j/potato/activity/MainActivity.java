@@ -1,26 +1,18 @@
 package com.levent_j.potato.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.PopupWindow;
 
 import com.levent_j.potato.R;
 import com.levent_j.potato.adapter.TaskAdapter;
@@ -31,7 +23,6 @@ import com.levent_j.potato.utils.SGDecoration;
 import butterknife.Bind;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class MainActivity extends BaseActivity
@@ -77,7 +68,7 @@ public class MainActivity extends BaseActivity
 
     private void initData() {
         if (getIntent().getBooleanExtra("tag",false)){
-
+            Log.d("--Main","getData");
             //写入realm
             realm.beginTransaction();
 
@@ -91,12 +82,34 @@ public class MainActivity extends BaseActivity
 
             realm.commitTransaction();
 
-            taskAdapter.updateTaskList(task);
         }else {
-            RealmResults<Task> realmResults = realm.where(Task.class).findAll();
-            for (Task task:realmResults){
-                taskAdapter.updateTaskList(task);
-            }
+            Log.d("--Main", "noData");
+            taskAdapter.clearTaskList();
+        }
+        RealmResults<Task> realmResults = realm.where(Task.class).findAll();
+        for (Task task:realmResults){
+            taskAdapter.updateTaskList(task);
+        }
+
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        realm.beginTransaction();
+        Task task = realm.createObject(Task.class);
+        task.setTitle(intent.getStringExtra("title"));
+        task.setMessage(intent.getStringExtra("message"));
+        task.setStudy(Integer.parseInt(intent.getStringExtra("study")));
+        task.setReview(Integer.parseInt(intent.getStringExtra("review")));
+        task.setRest(Integer.parseInt(intent.getStringExtra("rest")));
+        realm.commitTransaction();
+
+        taskAdapter.clearTaskList();
+
+        RealmResults<Task> realmResults = realm.where(Task.class).findAll();
+        for (Task t:realmResults){
+            taskAdapter.updateTaskList(t);
         }
     }
 

@@ -106,6 +106,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.mViewHolder>{
         taskList.add(task);
         notifyDataSetChanged();
     }
+    public void clearTaskList(){
+        taskList.clear();
+    }
 
     class mViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.tv_task_item_title)
