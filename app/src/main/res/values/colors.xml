@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFC107</color>
 
     <color name="btn_text_white">#ffffff</color>
+    <color name="btn_bg_white">#ffffff</color>
 </resources>
