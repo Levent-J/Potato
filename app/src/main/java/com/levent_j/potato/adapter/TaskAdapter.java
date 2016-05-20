@@ -1,6 +1,7 @@
 package com.levent_j.potato.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.support.v7.widget.CardView;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.levent_j.potato.R;
 import com.levent_j.potato.activity.TaskActivity;
 import com.levent_j.potato.bean.Task;
+import com.levent_j.potato.widget.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.mViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(mViewHolder holder, int position) {
+    public void onBindViewHolder(mViewHolder holder, final int position) {
         final Task task = taskList.get(position);
         holder.mTitle.setText(task.getTitle());
         holder.mMessage.setText(task.getMessage());
@@ -61,6 +63,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.mViewHolder>{
                 intent.putExtra("review",task.getReview());
                 intent.putExtra("rest",task.getRest());
                 context.startActivity(intent);
+            }
+        });
+        holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CustomDialog.Builder mDialog = new CustomDialog.Builder(context);
+                mDialog.setTitle("提示")
+                        .setMessage("要删除该任务吗？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                taskList.remove(position);
+                                notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+                return false;
             }
         });
     }

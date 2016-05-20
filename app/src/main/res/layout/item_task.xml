@@ -15,8 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center_horizontal">
         <TextView
+            android:layout_marginTop="40dp"
             android:textSize="14sp"
             android:gravity="center"
             android:layout_width="match_parent"
@@ -25,8 +26,9 @@
             android:textColor="@color/btn_text_white"
             android:id="@+id/tv_task_item_title"/>
         <TextView
+            android:layout_marginTop="40dp"
             android:textSize="16sp"
-            android:gravity="center"
+            android:gravity="center|top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="false"

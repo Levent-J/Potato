@@ -3,12 +3,15 @@ package com.levent_j.potato.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
 import com.levent_j.potato.base.BaseActivity;
+
+import org.w3c.dom.Text;
 
 import butterknife.Bind;
 import info.hoang8f.widget.FButton;
@@ -67,14 +70,14 @@ public class EditorActivity extends BaseActivity{
     }
 
     private boolean checkNull() {
-        if ("".equals(mTitle.getText().toString())
-                ||"".equals(mContent.getText().toString())
-                ||"".equals(mDurationStudy.getText().toString())
-                ||"".equals(mDurationReview.getText().toString())
-                ||"".equals(mDurationRest.getText().toString())){
-            return false;
-        }else {
+        if (    TextUtils.isEmpty(mTitle.getText())
+                ||TextUtils.isEmpty(mContent.getText())
+                ||TextUtils.isEmpty(mDurationStudy.getText())
+                ||TextUtils.isEmpty(mDurationReview.getText())
+                ||TextUtils.isEmpty(mDurationRest.getText())){
             return true;
+        }else {
+            return false;
         }
 
     }

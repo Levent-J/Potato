@@ -3,10 +3,12 @@ package com.levent_j.potato.activity;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
 import com.levent_j.potato.base.BaseActivity;
+import com.levent_j.potato.utils.Util;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,12 +26,19 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.tv_task_duration_rest) TextView mDurationRest;
     @Bind(R.id.btn_task_start) Button mStartTask;
     @Bind(R.id.tv_toolbar_title) TextView mToolBar;
+    @Bind(R.id.rl_show) RelativeLayout mShowLayout;
 
     private Timer timer;
     private TimerTask AfterStudyTask;
     private TimerTask AfterReviewTask;
     private TimerTask AfterRestTask;
     private android.os.Handler handler;
+
+    private int StudyDuration;
+    private int ReviewDuration;
+    private int RestDuration;
+
+    private boolean canBack = true;
 
     @Override
     protected int getLayoutId() {
@@ -48,14 +57,16 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
                 switch (type){
                     case 1:
                         T("学习完毕");
-                        timer.schedule(AfterReviewTask, 3000);
+                        timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
                         break;
                     case 2:
                         T("复习完毕");
-                        timer.schedule(AfterRestTask,3000);
+                        timer.schedule(AfterRestTask,Util.Minute2Second(RestDuration));
                         break;
                     case 3:
                         T("休息完毕");
+                        mShowLayout.setVisibility(View.GONE);
+                        canBack = true;
                         break;
                 }
 
@@ -75,6 +86,10 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
             mDurationStudy.setText(getIntent().getIntExtra("study", 0)+"分钟");
             mDurationReview.setText(getIntent().getIntExtra("review",0)+"分钟");
             mDurationRest.setText(getIntent().getIntExtra("rest",0)+"分钟");
+
+            StudyDuration = getIntent().getIntExtra("study", 0);
+            ReviewDuration = getIntent().getIntExtra("review",0);
+            RestDuration = getIntent().getIntExtra("rest",0);
         }
     }
 
@@ -117,8 +132,17 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()){
             case R.id.btn_task_start:
                 initTask();
-                timer.schedule(AfterStudyTask,3000);
+                mShowLayout.setVisibility(View.VISIBLE);
+                canBack=false;
+                timer.schedule(AfterStudyTask, Util.Minute2Second(StudyDuration));
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (canBack){
+            super.onBackPressed();
         }
     }
 }
