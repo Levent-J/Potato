@@ -29,6 +29,10 @@ import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.utils.SGDecoration;
 
 import butterknife.Bind;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -41,7 +45,7 @@ public class MainActivity extends BaseActivity
 
     private TaskAdapter taskAdapter;
     private int spacingInPixels;
-
+    private static Realm realm;
 
     @Override
     protected int getLayoutId() {
@@ -50,6 +54,11 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void init() {
+        realm = Realm.getInstance(
+                new RealmConfiguration.Builder(this)
+                .name("Test.realm")
+                .build()
+        );
         taskAdapter = new TaskAdapter(this);
         taskRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         spacingInPixels = getResources().getDimensionPixelSize(R.dimen.hero);
@@ -68,13 +77,26 @@ public class MainActivity extends BaseActivity
 
     private void initData() {
         if (getIntent().getBooleanExtra("tag",false)){
-            Task task = new Task();
+
+            //写入realm
+            realm.beginTransaction();
+
+            Task task = realm.createObject(Task.class);
+
             task.setTitle(getIntent().getStringExtra("title"));
             task.setMessage(getIntent().getStringExtra("message"));
             task.setStudy(Integer.parseInt(getIntent().getStringExtra("study")));
             task.setReview(Integer.parseInt(getIntent().getStringExtra("review")));
             task.setRest(Integer.parseInt(getIntent().getStringExtra("rest")));
+
+            realm.commitTransaction();
+
             taskAdapter.updateTaskList(task);
+        }else {
+            RealmResults<Task> realmResults = realm.where(Task.class).findAll();
+            for (Task task:realmResults){
+                taskAdapter.updateTaskList(task);
+            }
         }
     }
 
@@ -122,19 +144,19 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+//        if (id == R.id.nav_camara) {
+//            // Handle the camera action
+//        } else if (id == R.id.nav_gallery) {
+//
+//        } else if (id == R.id.nav_slideshow) {
+//
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -148,6 +170,14 @@ public class MainActivity extends BaseActivity
                 startActivity(new Intent(MainActivity.this,EditorActivity.class));
                 break;
         }
+    }
+
+    public static void deleteFromRealm(Task task,int pos){
+        RealmResults<Task> realmResults = realm.where(Task.class).findAll();
+
+        realm.beginTransaction();
+        realmResults.deleteFromRealm(pos);
+        realm.commitTransaction();
     }
 
 

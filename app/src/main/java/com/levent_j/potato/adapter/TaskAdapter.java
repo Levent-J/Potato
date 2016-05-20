@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
+import com.levent_j.potato.activity.MainActivity;
 import com.levent_j.potato.activity.TaskActivity;
 import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.widget.CustomDialog;
@@ -76,6 +77,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.mViewHolder>{
                             public void onClick(DialogInterface dialog, int which) {
                                 taskList.remove(position);
                                 notifyDataSetChanged();
+
+                                //从realm中删除
+                                MainActivity.deleteFromRealm(task,position);
+
                                 dialog.dismiss();
                             }
                         })

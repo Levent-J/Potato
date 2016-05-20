@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_title"/>
         <EditText
+            android:textColorLink="@color/colorDivider"
             android:singleLine="true"
             android:maxLength="10"
             android:id="@+id/et_title"

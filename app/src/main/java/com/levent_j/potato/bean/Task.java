@@ -1,9 +1,12 @@
 package com.levent_j.potato.bean;
 
+import io.realm.RealmObject;
+
 /**
  * Created by levent_j on 16-5-19.
  */
-public class Task {
+public class Task extends RealmObject{
+
     private String title;
     private String message;
     private int color;

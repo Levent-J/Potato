@@ -2,7 +2,9 @@
 <resources>
     <color name="colorPrimary">#FF9800</color>
     <color name="colorPrimaryDark">#F57C00</color>
+    <color name="colorPrimaryLight">#FFE0B2</color>
     <color name="colorAccent">#FFC107</color>
+    <color name="colorDivider">#B6B6B6</color>
 
     <color name="btn_text_white">#ffffff</color>
     <color name="btn_bg_white">#ffffff</color>
