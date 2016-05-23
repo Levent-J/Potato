@@ -12,6 +12,7 @@
         android:orientation="vertical">
         <TextView
             android:visibility="gone"
+            android:layout_marginTop="20dp"
             android:textSize="14sp"
             android:textColor="@color/btn_text_white"
             android:layout_gravity="center"

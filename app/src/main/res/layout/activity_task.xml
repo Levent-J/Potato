@@ -1,88 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:gravity="center_horizontal">
-
-    <FrameLayout
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container">
+    <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-            <include layout="@layout/custom_toolbar"></include>
-            <TextView
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_marginTop="60dp"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="期末复习"
-                android:id="@+id/tv_task_title"/>
-            <TextView
-                android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="22sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="复习法语balabala"
-                android:id="@+id/tv_task_message"/>
-            <TextView
-                android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="学习时长:25分钟"
-                android:id="@+id/tv_task_duration_study"/>
-            <TextView
-                android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="复习时长:5分钟"
-                android:id="@+id/tv_task_duration_review"/>
-            <TextView
-                android:layout_marginBottom="40dp"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="学习时长:5分钟"
-                android:id="@+id/tv_task_duration_rest"/>
-            <Button
-                android:textColor="@color/btn_text_white"
-                android:background="@drawable/bg_btn"
-                android:layout_marginBottom="40dp"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_task_start"
-                android:text="开始"
-                android:layout_gravity="center_horizontal" />
+        android:layout_height="match_parent"
+        android:id="@+id/rl_show"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/btn_text_white"
+            android:text="假装有图片"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/ll_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <include layout="@layout/custom_toolbar"></include>
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginTop="60dp"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="期末复习"
+            android:id="@+id/tv_task_title"/>
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="22sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="复习法语balabala"
+            android:id="@+id/tv_task_message"/>
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学习时长:25分钟"
+            android:id="@+id/tv_task_duration_study"/>
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="复习时长:5分钟"
+            android:id="@+id/tv_task_duration_review"/>
+        <TextView
+            android:layout_marginBottom="40dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学习时长:5分钟"
+            android:id="@+id/tv_task_duration_rest"/>
+        <Button
+            android:textColor="@color/btn_text_white"
+            android:background="@drawable/bg_btn"
+            android:layout_marginBottom="40dp"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_task_start"
+            android:text="开始"
+            android:layout_gravity="center_horizontal" />
 
-        </LinearLayout>
-
-        <RelativeLayout
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/rl_show"
-            android:background="@color/colorPrimary">
-            <TextView
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@color/btn_text_white"
-                android:text="假装有图片"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-    </FrameLayout>
+    </LinearLayout>
 
 
-</LinearLayout>
+</FrameLayout>
+

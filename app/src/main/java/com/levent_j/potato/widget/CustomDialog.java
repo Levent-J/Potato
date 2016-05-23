@@ -116,6 +116,7 @@ public class CustomDialog extends Dialog {
             return this;
         }
 
+
         public CustomDialog create(){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final CustomDialog dialog = new CustomDialog(context, R.style.Dialog);

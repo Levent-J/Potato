@@ -1,14 +1,20 @@
 package com.levent_j.potato.activity;
 
+import android.content.DialogInterface;
 import android.os.Message;
+import android.os.Vibrator;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
 import com.levent_j.potato.base.BaseActivity;
 import com.levent_j.potato.utils.Util;
+import com.levent_j.potato.widget.CustomDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,6 +33,8 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.btn_task_start) Button mStartTask;
     @Bind(R.id.tv_toolbar_title) TextView mToolBar;
     @Bind(R.id.rl_show) RelativeLayout mShowLayout;
+    @Bind(R.id.container) FrameLayout container;
+    @Bind(R.id.ll_layout) LinearLayout mLayout;
 
     private Timer timer;
     private TimerTask AfterStudyTask;
@@ -40,6 +48,12 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
 
     private boolean canBack = true;
 
+    //振动器
+    private Vibrator vibrator;
+
+    //振动时间
+    private long[] vibratorTimes = new long[]{1000,1000};
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_task;
@@ -47,6 +61,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void init() {
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         mToolBar.setText("任务详情");
         timer = new Timer();
         handler = new android.os.Handler(){
@@ -56,20 +71,15 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
                 int type = msg.what;
                 switch (type){
                     case 1:
-                        T("学习完毕");
-                        timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
+                        startVibrator("学习完毕");
                         break;
                     case 2:
-                        T("复习完毕");
-                        timer.schedule(AfterRestTask,Util.Minute2Second(RestDuration));
+                        startVibrator("复习完毕");
                         break;
                     case 3:
-                        T("休息完毕");
-                        mShowLayout.setVisibility(View.GONE);
-                        canBack = true;
+                        startVibrator("休息完毕");
                         break;
                 }
-
                 super.handleMessage(msg);
             }
         };
@@ -77,6 +87,38 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
 
         //getLayout获取数据并填充
         initData();
+    }
+
+    private void startVibrator(final String s) {
+
+        //开始振动
+        vibrator.vibrate(vibratorTimes, 0);
+
+        CustomDialog customDialog = new CustomDialog(this);
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+
+        customDialog = builder.setTitle("")
+                .setMessage("关闭振动吧！")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        vibrator.cancel();
+                        if (s.equals("学习完毕")) {
+                            timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
+                        } else if (s.equals("复习完毕")) {
+                            timer.schedule(AfterRestTask, Util.Minute2Second(RestDuration));
+                        } else {
+                            mLayout.setVisibility(View.VISIBLE);
+                            mShowLayout.setVisibility(View.GONE);
+                            canBack = true;
+                        }
+                    }
+                })
+                .create();
+
+        customDialog.setCanceledOnTouchOutside(false);
+        customDialog.show();
     }
 
     private void initData() {
@@ -133,6 +175,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_task_start:
                 initTask();
                 mShowLayout.setVisibility(View.VISIBLE);
+                mLayout.setVisibility(View.GONE);
                 canBack=false;
                 timer.schedule(AfterStudyTask, Util.Minute2Second(StudyDuration));
                 break;

@@ -6,6 +6,6 @@ package com.levent_j.potato.utils;
 public class Util {
     public static int Minute2Second(int minute){
         //*60000
-        return minute*1000;
+        return minute*5000;
     }
 }
