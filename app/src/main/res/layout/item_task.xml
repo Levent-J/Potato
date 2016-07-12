@@ -34,7 +34,7 @@
             android:singleLine="false"
             android:text="message"
             android:textColor="@color/btn_text_white"
-            android:id="@+id/tv_task_item_message"/>
+            android:id="@+id/tv_task_item_content"/>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

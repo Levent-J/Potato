@@ -20,13 +20,14 @@ import com.levent_j.potato.base.BaseActivity;
 import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.utils.SGDecoration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
@@ -34,88 +35,53 @@ public class MainActivity extends BaseActivity
     @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.rv_task_list) RecyclerView taskRecyclerView;
 
-    private TaskAdapter taskAdapter;
+    private TaskAdapter adapter;
     private int spacingInPixels;
-    private static Realm realm;
 
     @Override
-    protected int getLayoutId() {
+    protected int setRootLayout() {
         return R.layout.activity_main;
     }
 
     @Override
-    protected void init() {
-        realm = Realm.getInstance(
-                new RealmConfiguration.Builder(this)
-                .name("Test.realm")
-                .build()
-        );
-        taskAdapter = new TaskAdapter(this);
+    protected void initView() {
         taskRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        spacingInPixels = getResources().getDimensionPixelSize(R.dimen.hero);
-        taskRecyclerView.addItemDecoration(new SGDecoration(spacingInPixels));
+        taskRecyclerView.addItemDecoration(new SGDecoration(getResources().getDimensionPixelSize(R.dimen.hero)));
         taskRecyclerView.setHasFixedSize(true);
-        taskRecyclerView.setAdapter(taskAdapter);
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        initData();
-    }
-
-    private void initData() {
-        if (getIntent().getBooleanExtra("tag",false)){
-            Log.d("--Main","getData");
-            //写入realm
-            realm.beginTransaction();
-
-            Task task = realm.createObject(Task.class);
-
-            task.setTitle(getIntent().getStringExtra("title"));
-            task.setMessage(getIntent().getStringExtra("message"));
-            task.setStudy(Integer.parseInt(getIntent().getStringExtra("study")));
-            task.setReview(Integer.parseInt(getIntent().getStringExtra("review")));
-            task.setRest(Integer.parseInt(getIntent().getStringExtra("rest")));
-
-            realm.commitTransaction();
-
-        }else {
-            Log.d("--Main", "noData");
-            taskAdapter.clearTaskList();
-        }
-        RealmResults<Task> realmResults = realm.where(Task.class).findAll();
-        for (Task task:realmResults){
-            taskAdapter.updateTaskList(task);
-        }
-
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        realm.beginTransaction();
-        Task task = realm.createObject(Task.class);
-        task.setTitle(intent.getStringExtra("title"));
-        task.setMessage(intent.getStringExtra("message"));
-        task.setStudy(Integer.parseInt(intent.getStringExtra("study")));
-        task.setReview(Integer.parseInt(intent.getStringExtra("review")));
-        task.setRest(Integer.parseInt(intent.getStringExtra("rest")));
-        realm.commitTransaction();
+    protected void initData() {
 
-        taskAdapter.clearTaskList();
+        //初始化adapter
+        adapter = new TaskAdapter(this);
+        taskRecyclerView.setAdapter(adapter);
 
-        RealmResults<Task> realmResults = realm.where(Task.class).findAll();
-        for (Task t:realmResults){
-            taskAdapter.updateTaskList(t);
+        //TODO:填充recyclerview
+        List<Task> list = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            Task task = new Task();
+            task.setTitle("学习");
+            task.setMessage("学习Android");
+            task.setStudy(1);
+            task.setReview(1);
+            task.setRest(1);
+            list.add(task);
         }
+        adapter.replaceData(list);
     }
+
+
+
 
     @Override
     protected void setListener() {
-        fab.setOnClickListener(this);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -176,22 +142,12 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.fab:
-                startActivity(new Intent(MainActivity.this,EditorActivity.class));
-                break;
-        }
+
+    @OnClick(R.id.fab)
+    public void create(View view){
+        startActivity(new Intent(MainActivity.this, EditTaskActivity.class));
     }
 
-    public static void deleteFromRealm(Task task,int pos){
-        RealmResults<Task> realmResults = realm.where(Task.class).findAll();
-
-        realm.beginTransaction();
-        realmResults.deleteFromRealm(pos);
-        realm.commitTransaction();
-    }
 
 
 }

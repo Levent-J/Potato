@@ -26,7 +26,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal">
-        <include layout="@layout/custom_toolbar"></include>
         <TextView
             android:gravity="center"
             android:layout_weight="1"
