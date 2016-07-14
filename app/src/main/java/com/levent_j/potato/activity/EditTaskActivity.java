@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.levent_j.potato.R;
 import com.levent_j.potato.base.BaseActivity;
+import com.levent_j.potato.bean.Task;
 
 import org.w3c.dom.Text;
 
@@ -31,6 +32,8 @@ public class EditTaskActivity extends BaseActivity{
     EditText durationReview;
     @Bind(R.id.et_rest)
     EditText durationRest;
+
+    private final static int RESULT_CODE = 1;
 
     @Override
     protected int setRootLayout() {
@@ -58,19 +61,29 @@ public class EditTaskActivity extends BaseActivity{
                     .setAction("Action", null).show();
         }else {
             Intent intent = new Intent(this, MainActivity.class);
-            //TODO:传入一个task
+            intent.putExtra("Task",getTask());
+            setResult(RESULT_CODE,intent);
             finish();
-            //TODO:带返回值的intent
         }
+    }
+
+    private Task getTask() {
+        Task task = new Task();
+        task.setTitle(title.getText().toString().trim());
+        task.setMessage(content.getText().toString().trim());
+        task.setStudy(Double.valueOf(durationStudy.getText().toString().trim()));
+        task.setReview(Double.valueOf(durationReview.getText().toString().trim()));
+        task.setRest(Double.valueOf(durationRest.getText().toString().trim()));
+        return task;
     }
 
 
     private boolean checkNull() {
-        if (    TextUtils.isEmpty(title.getText())
-                ||TextUtils.isEmpty(content.getText())
-                ||TextUtils.isEmpty(durationStudy.getText())
-                ||TextUtils.isEmpty(durationReview.getText())
-                ||TextUtils.isEmpty(durationRest.getText())){
+        if (    TextUtils.isEmpty(title.getText().toString().trim())
+                ||TextUtils.isEmpty(content.getText().toString().trim())
+                ||TextUtils.isEmpty(durationStudy.getText().toString().trim())
+                ||TextUtils.isEmpty(durationReview.getText().toString().trim())
+                ||TextUtils.isEmpty(durationRest.getText().toString().trim())){
             return true;
         }else {
             return false;

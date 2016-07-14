@@ -41,9 +41,9 @@ public class TaskDetailActivity extends BaseActivity{
     private TimerTask AfterRestTask;
     private android.os.Handler handler;
 
-    private int StudyDuration;
-    private int ReviewDuration;
-    private int RestDuration;
+    private double StudyDuration;
+    private double ReviewDuration;
+    private double RestDuration;
 
     private boolean canBack = true;
 
@@ -114,9 +114,9 @@ public class TaskDetailActivity extends BaseActivity{
                         dialog.dismiss();
                         vibrator.cancel();
                         if (s.equals("学习完毕")) {
-                            timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
+                            timer.schedule(AfterReviewTask, (long) Util.Minute2Second(ReviewDuration));
                         } else if (s.equals("复习完毕")) {
-                            timer.schedule(AfterRestTask, Util.Minute2Second(RestDuration));
+                            timer.schedule(AfterRestTask, (long) Util.Minute2Second(RestDuration));
                         } else {
                             taskLayout.setVisibility(View.VISIBLE);
                             imgLayout.setVisibility(View.GONE);
@@ -170,7 +170,7 @@ public class TaskDetailActivity extends BaseActivity{
         imgLayout.setVisibility(View.VISIBLE);
         taskLayout.setVisibility(View.GONE);
         canBack=false;
-        timer.schedule(AfterStudyTask, Util.Minute2Second(StudyDuration));
+        timer.schedule(AfterStudyTask, (long) Util.Minute2Second(StudyDuration));
     }
 
 

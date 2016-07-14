@@ -30,13 +30,13 @@ public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.fab) FloatingActionButton fab;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.rv_task_list) RecyclerView taskRecyclerView;
 
     private TaskAdapter adapter;
-    private int spacingInPixels;
+
+    private final static int RESULT_CODE = 1;
 
     @Override
     protected int setRootLayout() {
@@ -145,9 +145,14 @@ public class MainActivity extends BaseActivity
 
     @OnClick(R.id.fab)
     public void create(View view){
-        startActivity(new Intent(MainActivity.this, EditTaskActivity.class));
+        Intent intent = new Intent(MainActivity.this, EditTaskActivity.class);
+        startActivityForResult(intent,RESULT_CODE);
     }
 
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Task task = data.getParcelableExtra("Task");
+        adapter.appendData(task);
+    }
 }

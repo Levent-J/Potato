@@ -35,7 +35,12 @@ public abstract class BaseAdapter<T,VH extends RecyclerView.ViewHolder> extends 
         int start = datas.size();
         int count = list.size();
         datas.addAll(list);
-        notifyItemRangeInserted(start,count);
+        notifyItemRangeInserted(start, count);
+    }
+
+    public void appendData(T t){
+        datas.add(t);
+        notifyDataSetChanged();
     }
 
     public void clearData(){
