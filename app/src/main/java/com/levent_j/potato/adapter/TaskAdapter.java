@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
+import com.levent_j.potato.activity.EditTaskActivity;
 import com.levent_j.potato.activity.TaskDetailActivity;
 import com.levent_j.potato.base.BaseAdapter;
 import com.levent_j.potato.bean.Task;
@@ -34,7 +36,7 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
 
     @Override
     public mViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_task,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_task,null,false);
         return new mViewHolder(view);
     }
 
@@ -89,20 +91,27 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
                 public boolean onLongClick(View v) {
                     CustomDialog.Builder mDialog = new CustomDialog.Builder(context);
                     mDialog.setTitle("提示")
-                            .setMessage("要删除该任务吗？")
-                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            .setMessage("对于这颗土豆，你要...")
+                            .setPositiveButton("扔掉", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    //删除该数据
+                                    task.delete();
                                     datas.remove(position);
                                     notifyDataSetChanged();
-
-
                                     dialog.dismiss();
                                 }
                             })
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("修改", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    //TODO:修改界面
+                                    Intent intent = new Intent(context, EditTaskActivity.class);
+                                    intent.putExtra("Task",task);
+                                    intent.putExtra("Edit",true);
+                                    intent.putExtra("id",task.getId());
+                                    Log.e("Edit", "id="+task.getId());
+                                    context.startActivity(intent);
                                     dialog.dismiss();
                                 }
                             })

@@ -21,64 +21,155 @@
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
     <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/ll_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <TextView
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_marginTop="60dp"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
+        android:weightSum="1"
+        android:background="@color/btn_bg_white">
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="期末复习"
-            android:id="@+id/tv_task_title"/>
-        <TextView
+            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="22sp"
-            android:layout_width="wrap_content"
+            android:layout_weight="0.15">
+            <ImageView
+                android:src="@drawable/ic_title"
+                android:tint="@color/colorPrimary"
+                android:layout_width="26sp"
+                android:layout_height="26sp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:textColorLink="@color/colorDivider"
+                android:singleLine="true"
+                android:maxLength="10"
+                android:id="@+id/tv_task_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="土豆品种"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="复习法语balabala"
-            android:id="@+id/tv_task_message"/>
-        <TextView
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_weight="0.15">
+            <ImageView
+                android:tint="@color/colorPrimary"
+                android:layout_height="26sp"
+                android:src="@drawable/ic_detail"
+                android:layout_width="26sp"
+                android:layout_marginRight="10dp" />
+            <TextView
+                android:textSize="16sp"
+                android:paddingLeft="2dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:paddingRight="2dp"
+                android:gravity="left|top"
+                android:backgroundTint="@color/btn_bg_white"
+                android:background="@drawable/editor_border"
+                android:id="@+id/tv_task_message"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:hint="土豆详情"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
+            android:layout_weight="0.15">
+            <ImageView
+                android:src="@drawable/ic_eat"
+                android:tint="@color/colorPrimary"
+                android:layout_width="26sp"
+                android:layout_height="26sp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:id="@+id/tv_task_duration_study"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="啃土豆时间(分钟)"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.15"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="学习时长:25分钟"
-            android:id="@+id/tv_task_duration_study"/>
-        <TextView
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:src="@drawable/ic_review"
+                android:tint="@color/colorPrimary"
+                android:layout_width="26sp"
+                android:layout_height="26sp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:id="@+id/tv_task_duration_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="消化时间(分钟)"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="0.15"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="复习时长:5分钟"
-            android:id="@+id/tv_task_duration_review"/>
-        <TextView
-            android:layout_marginBottom="40dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="学习时长:5分钟"
-            android:id="@+id/tv_task_duration_rest"/>
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:src="@drawable/ic_rest"
+                android:tint="@color/colorPrimary"
+                android:layout_width="26sp"
+                android:layout_height="26sp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:id="@+id/tv_task_duration_rest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="休息这么久(分钟)"/>
+        </LinearLayout>
         <Button
             android:textColor="@color/btn_text_white"
             android:background="@drawable/bg_btn"
-            android:layout_marginBottom="40dp"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:id="@+id/btn_task_start"
             android:text="开始"
-            android:layout_gravity="center_horizontal" />
-
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+        </LinearLayout>
 
 
 </FrameLayout>

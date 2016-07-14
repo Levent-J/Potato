@@ -34,6 +34,10 @@ public class EditTaskActivity extends BaseActivity{
     EditText durationRest;
 
     private final static int RESULT_CODE = 1;
+    private boolean isEdit = false;
+
+    //修改时用到的实体
+    private Task task;
 
     @Override
     protected int setRootLayout() {
@@ -42,11 +46,19 @@ public class EditTaskActivity extends BaseActivity{
 
     @Override
     protected void initView() {
+        if (getIntent().getBooleanExtra("Edit",false)){
+            task = getIntent().getParcelableExtra("Task");
+            title.setText(task.getTitle());
+            content.setText(task.getMessage());
+            durationStudy.setText(String.valueOf(task.getStudy()));
+            durationReview.setText(String.valueOf(task.getReview()));
+            durationRest.setText(String.valueOf(task.getRest()));
+            isEdit = true;
+        }
     }
 
     @Override
     protected void initData() {
-
     }
 
     @Override
@@ -61,20 +73,34 @@ public class EditTaskActivity extends BaseActivity{
                     .setAction("Action", null).show();
         }else {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("Task",getTask());
-            setResult(RESULT_CODE,intent);
+            intent.putExtra("Task", getTask());
+            setResult(RESULT_CODE, intent);
+
             finish();
         }
     }
 
     private Task getTask() {
-        Task task = new Task();
-        task.setTitle(title.getText().toString().trim());
-        task.setMessage(content.getText().toString().trim());
-        task.setStudy(Double.valueOf(durationStudy.getText().toString().trim()));
-        task.setReview(Double.valueOf(durationReview.getText().toString().trim()));
-        task.setRest(Double.valueOf(durationRest.getText().toString().trim()));
-        return task;
+
+        if (isEdit){
+            Task newTask= Task.findById(Task.class,getIntent().getLongExtra("id",0));
+            newTask.setTitle(title.getText().toString().trim());
+            newTask.setMessage(content.getText().toString().trim());
+            newTask.setStudy(Double.valueOf(durationStudy.getText().toString().trim()));
+            newTask.setReview(Double.valueOf(durationReview.getText().toString().trim()));
+            newTask.setRest(Double.valueOf(durationRest.getText().toString().trim()));
+            newTask.save();
+            return newTask;
+        }else {
+            Task newTask = new Task();
+            newTask.setTitle(title.getText().toString().trim());
+            newTask.setMessage(content.getText().toString().trim());
+            newTask.setStudy(Double.valueOf(durationStudy.getText().toString().trim()));
+            newTask.setReview(Double.valueOf(durationReview.getText().toString().trim()));
+            newTask.setRest(Double.valueOf(durationRest.getText().toString().trim()));
+            newTask.save();
+            return newTask;
+        }
     }
 
 
@@ -89,5 +115,10 @@ public class EditTaskActivity extends BaseActivity{
             return false;
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

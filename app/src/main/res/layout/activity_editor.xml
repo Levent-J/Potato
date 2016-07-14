@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="@color/btn_bg_white">
     <LinearLayout
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -15,18 +16,23 @@
         android:orientation="horizontal"
         android:gravity="center">
         <ImageView
+            android:src="@drawable/ic_title"
             android:tint="@color/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_title"/>
+            android:layout_width="26sp"
+            android:layout_height="26sp"
+            android:layout_marginRight="10dp"/>
         <EditText
+            android:paddingLeft="10dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/et_line"
             android:textColorLink="@color/colorDivider"
             android:singleLine="true"
             android:maxLength="10"
             android:id="@+id/et_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="标题(十个字以内)"/>
+            android:hint="土豆品种"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -40,17 +46,21 @@
         android:gravity="center_horizontal">
         <ImageView
             android:tint="@color/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_content"
+            android:layout_height="26sp"
+            android:src="@drawable/ic_detail"
+            android:layout_width="26sp"
             android:layout_marginRight="10dp" />
         <EditText
+            android:paddingLeft="2dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:paddingRight="2dp"
             android:gravity="left|top"
             android:background="@drawable/editor_border"
             android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:hint="学习内容"/>
+            android:hint="土豆详情"/>
     </LinearLayout>
 
     <LinearLayout
@@ -63,17 +73,21 @@
         android:orientation="horizontal"
         android:gravity="center">
         <ImageView
+            android:src="@drawable/ic_eat"
             android:tint="@color/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_study"/>
+            android:layout_width="26sp"
+            android:layout_height="26sp"
+            android:layout_marginRight="10dp"/>
         <EditText
+            android:paddingLeft="10dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/et_line"
             android:singleLine="true"
             android:inputType="number"
             android:id="@+id/et_study"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="学习时长（分钟）"/>
+            android:hint="啃土豆时间(分钟)"/>
     </LinearLayout>
 
     <LinearLayout
@@ -86,17 +100,21 @@
         android:orientation="horizontal"
         android:gravity="center">
         <ImageView
+            android:src="@drawable/ic_review"
             android:tint="@color/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_review"/>
+            android:layout_width="26sp"
+            android:layout_height="26sp"
+            android:layout_marginRight="10dp"/>
         <EditText
+            android:paddingLeft="10dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/et_line"
             android:singleLine="true"
             android:inputType="number"
             android:id="@+id/et_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="复习时长（分钟）"/>
+            android:hint="消化时间(分钟)"/>
     </LinearLayout>
 
     <LinearLayout
@@ -108,17 +126,21 @@
         android:orientation="horizontal"
         android:gravity="center">
         <ImageView
+            android:src="@drawable/ic_rest"
             android:tint="@color/colorPrimary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_rest"/>
+            android:layout_width="26sp"
+            android:layout_height="26sp"
+            android:layout_marginRight="10dp"/>
         <EditText
+            android:paddingLeft="10dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/et_line"
             android:singleLine="true"
             android:inputType="number"
             android:id="@+id/et_rest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="休息时长（分钟）"/>
+            android:hint="休息这么久(分钟)"/>
     </LinearLayout>
     <info.hoang8f.widget.FButton
         android:id="@+id/btn_confirm"
@@ -129,10 +151,9 @@
         fbutton:cornerRadius="5dp"
         android:textSize="16sp"
         android:textColor="@color/btn_text_white"
-        android:layout_weight="0.8"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:layout_height="wrap_content"
-        android:layout_width="200dp"
+        android:layout_width="138dp"
         android:text="完成"/>
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.levent_j.potato.activity;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.levent_j.potato.R;
 import com.levent_j.potato.adapter.TaskAdapter;
 import com.levent_j.potato.base.BaseActivity;
@@ -21,6 +22,7 @@ import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.utils.SGDecoration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,6 +35,7 @@ public class MainActivity extends BaseActivity
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.rv_task_list) RecyclerView taskRecyclerView;
+    @Bind(R.id.mr_main_refresh_main) MaterialRefreshLayout refreshLayout;
 
     private TaskAdapter adapter;
 
@@ -54,6 +57,13 @@ public class MainActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        refreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+                getTasks();
+            }
+        });
     }
 
     @Override
@@ -63,21 +73,20 @@ public class MainActivity extends BaseActivity
         adapter = new TaskAdapter(this);
         taskRecyclerView.setAdapter(adapter);
 
-        //TODO:填充recyclerview
-        List<Task> list = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            Task task = new Task();
-            task.setTitle("学习");
-            task.setMessage("学习Android");
-            task.setStudy(1);
-            task.setReview(1);
-            task.setRest(1);
-            list.add(task);
-        }
-        adapter.replaceData(list);
+        getTasks();
+        //填充adapter
+
     }
 
-
+    private void getTasks() {
+//        Iterator<Task> tasks = Task.findAll(Task.class);
+        List<Task> list = Task.listAll(Task.class);
+//        if (tasks.hasNext()){
+//            list.add(tasks.next());
+//        }
+        adapter.replaceData(list);
+        refreshLayout.finishRefresh();
+    }
 
 
     @Override
@@ -152,7 +161,10 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Task task = data.getParcelableExtra("Task");
-        adapter.appendData(task);
+        if (data!=null){
+            Task task = data.getParcelableExtra("Task");
+            adapter.appendData(task);
+        }
+
     }
 }

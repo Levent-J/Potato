@@ -66,9 +66,9 @@ public class TaskDetailActivity extends BaseActivity{
         Task task = getIntent().getParcelableExtra("Task");
         title.setText(task.getTitle());
         content.setText(task.getMessage());
-        durationStudy.setText(String.valueOf(task.getStudy()));
-        durationReview.setText(String.valueOf(task.getReview()));
-        durationRest.setText(String.valueOf(task.getRest()));
+        durationStudy.setText(String.valueOf((int)task.getStudy())+"分钟");
+        durationReview.setText(String.valueOf((int)task.getReview())+"分钟");
+        durationRest.setText(String.valueOf((int)task.getRest())+"分钟");
 
         StudyDuration = task.getStudy();
         ReviewDuration = task.getReview();
@@ -114,9 +114,9 @@ public class TaskDetailActivity extends BaseActivity{
                         dialog.dismiss();
                         vibrator.cancel();
                         if (s.equals("学习完毕")) {
-                            timer.schedule(AfterReviewTask, (long) Util.Minute2Second(ReviewDuration));
+                            timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
                         } else if (s.equals("复习完毕")) {
-                            timer.schedule(AfterRestTask, (long) Util.Minute2Second(RestDuration));
+                            timer.schedule(AfterRestTask, Util.Minute2Second(RestDuration));
                         } else {
                             taskLayout.setVisibility(View.VISIBLE);
                             imgLayout.setVisibility(View.GONE);
@@ -170,7 +170,7 @@ public class TaskDetailActivity extends BaseActivity{
         imgLayout.setVisibility(View.VISIBLE);
         taskLayout.setVisibility(View.GONE);
         canBack=false;
-        timer.schedule(AfterStudyTask, (long) Util.Minute2Second(StudyDuration));
+        timer.schedule(AfterStudyTask,  Util.Minute2Second(StudyDuration));
     }
 
 
