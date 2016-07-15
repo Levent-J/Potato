@@ -53,8 +53,12 @@ public class TaskDetailActivity extends BaseActivity{
     //振动时间
     private long[] vibratorTimes = new long[]{1000,1000};
 
-    //
+    //弹出框
     private CustomDialog.Builder builder;
+
+    //任务Task
+//    private Task task;
+    private Long id;
 
     @Override
     protected int setRootLayout() {
@@ -63,7 +67,10 @@ public class TaskDetailActivity extends BaseActivity{
 
     @Override
     protected void initView() {
+        /**获取Task及id*/
         Task task = getIntent().getParcelableExtra("Task");
+        id = getIntent().getLongExtra("id",0);
+
         title.setText(task.getTitle());
         content.setText(task.getMessage());
         durationStudy.setText(String.valueOf((int)task.getStudy())+"分钟");
@@ -171,6 +178,14 @@ public class TaskDetailActivity extends BaseActivity{
         taskLayout.setVisibility(View.GONE);
         canBack=false;
         timer.schedule(AfterStudyTask,  Util.Minute2Second(StudyDuration));
+        changeTaskState();
+    }
+
+    /**改变任务状态为1（已完成）*/
+    private void changeTaskState() {
+        Task task = Task.findById(Task.class,id);
+        task.setState(1);
+        task.save();
     }
 
 

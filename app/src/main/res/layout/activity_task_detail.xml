@@ -28,8 +28,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:weightSum="1"
-        android:background="@color/btn_bg_white">
+        android:weightSum="1">
         <LinearLayout
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

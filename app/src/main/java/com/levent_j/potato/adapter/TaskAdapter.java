@@ -3,6 +3,7 @@ package com.levent_j.potato.adapter;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
@@ -19,8 +21,6 @@ import com.levent_j.potato.base.BaseAdapter;
 import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.widget.CustomDialog;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -28,7 +28,11 @@ import butterknife.ButterKnife;
  * Created by levent_j on 16-5-19.
  */
 public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
-    private LayoutInflater layoutInflater;
+
+//    private int[] colors = new int[]{R.color.task_bg_1,R.color.task_bg_2,R.color.task_bg_3,R.color.task_bg_4,R.color.task_bg_5};
+    private String[] colors = new String[]{
+        "#FF7801","#FFAA20","#EAB122"
+};
 
     public TaskAdapter(Context context) {
         super(context);
@@ -65,7 +69,9 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
         @Bind(R.id.tv_task_item_content)
         TextView content;
         @Bind(R.id.card_view)
-        CardView layout;
+        CardView cardView;
+        @Bind(R.id.card_layout)
+        LinearLayout layout;
 
         public mViewHolder(View itemView) {
             super(itemView);
@@ -75,18 +81,27 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
         public void bindViews(final Task task, final int position){
             title.setText(task.getTitle());
             content.setText(task.getMessage());
-            ViewGroup.LayoutParams cardViewLayouParams = layout.getLayoutParams();
+
+            /**生成不同颜色的背景*/
+            Log.e("Color", "is" + task.getColor());
+            layout.setBackgroundColor(Color.parseColor(colors[task.getColor()]));
+
+            /**自适应屏幕布局*/
+            ViewGroup.LayoutParams cardViewLayouParams = cardView.getLayoutParams();
             cardViewLayouParams.width = getItemWidth();
             cardViewLayouParams.height = getItemWidth();
-            layout.setOnClickListener(new View.OnClickListener() {
+            /**点击进入任务详情界面*/
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, TaskDetailActivity.class);
-                    intent.putExtra("Task",task);
+                    intent.putExtra("Task", task);
+                    intent.putExtra("id", task.getId());
                     context.startActivity(intent);
                 }
             });
-            layout.setOnLongClickListener(new View.OnLongClickListener() {
+            /**长按弹出任务操作提示框*/
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     CustomDialog.Builder mDialog = new CustomDialog.Builder(context);
@@ -105,12 +120,11 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
                             .setNegativeButton("修改", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //TODO:修改界面
                                     Intent intent = new Intent(context, EditTaskActivity.class);
-                                    intent.putExtra("Task",task);
-                                    intent.putExtra("Edit",true);
-                                    intent.putExtra("id",task.getId());
-                                    Log.e("Edit", "id="+task.getId());
+                                    intent.putExtra("Task", task);
+                                    intent.putExtra("Edit", true);
+                                    intent.putExtra("id", task.getId());
+                                    Log.e("Edit", "id=" + task.getId());
                                     context.startActivity(intent);
                                     dialog.dismiss();
                                 }

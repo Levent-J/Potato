@@ -3,7 +3,6 @@ package com.levent_j.potato.activity;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -21,8 +21,6 @@ import com.levent_j.potato.base.BaseActivity;
 import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.utils.SGDecoration;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -61,7 +59,7 @@ public class MainActivity extends BaseActivity
         refreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-                getTasks();
+                queryTasks(0);
             }
         });
     }
@@ -73,17 +71,27 @@ public class MainActivity extends BaseActivity
         adapter = new TaskAdapter(this);
         taskRecyclerView.setAdapter(adapter);
 
-        getTasks();
+        queryTasks(0);
         //填充adapter
 
     }
 
-    private void getTasks() {
-//        Iterator<Task> tasks = Task.findAll(Task.class);
-        List<Task> list = Task.listAll(Task.class);
-//        if (tasks.hasNext()){
-//            list.add(tasks.next());
-//        }
+    private void queryTasks(int state) {
+        List<Task> list;
+        switch (state){
+            case 1:
+                //加载未完成
+                list = Task.find(Task.class,"state = ?","0");
+                break;
+            case 2:
+                //加载已完成
+                list = Task.find(Task.class,"state = ?","1");
+                break;
+            default:
+                //默认加载全部
+                list = Task.listAll(Task.class);
+                break;
+        }
         adapter.replaceData(list);
         refreshLayout.finishRefresh();
     }
@@ -119,8 +127,12 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_all) {
+            queryTasks(0);
+        }else if (id == R.id.action_finished){
+            queryTasks(2);
+        }else {
+            queryTasks(1);
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,6 +176,8 @@ public class MainActivity extends BaseActivity
         if (data!=null){
             Task task = data.getParcelableExtra("Task");
             adapter.appendData(task);
+            adapter.cleardatas();
+            queryTasks(0);
         }
 
     }

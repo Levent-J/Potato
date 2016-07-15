@@ -14,9 +14,11 @@ public class Task extends SugarRecord implements Parcelable{
     private String title;
     private String content;
     private int color;
+    private int state;
     private double Study;
     private double Review;
     private double Rest;
+
 
     public Task(){};
 
@@ -29,10 +31,12 @@ public class Task extends SugarRecord implements Parcelable{
         this.Rest = rest;
     }
 
+
     protected Task(Parcel in) {
         title = in.readString();
         content = in.readString();
         color = in.readInt();
+        state = in.readInt();
         Study = in.readDouble();
         Review = in.readDouble();
         Rest = in.readDouble();
@@ -72,6 +76,14 @@ public class Task extends SugarRecord implements Parcelable{
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public String getContent() {
@@ -116,6 +128,7 @@ public class Task extends SugarRecord implements Parcelable{
         dest.writeString(title);
         dest.writeString(content);
         dest.writeInt(color);
+        dest.writeInt(state);
         dest.writeDouble(Study);
         dest.writeDouble(Review);
         dest.writeDouble(Rest);

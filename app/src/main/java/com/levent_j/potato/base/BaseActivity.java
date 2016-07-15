@@ -1,5 +1,6 @@
 package com.levent_j.potato.base;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -31,7 +32,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void setListener();
 
-
+    public static Context getContext(){
+        return getContext();
+    }
 
 
 

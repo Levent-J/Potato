@@ -8,4 +8,10 @@
 
     <color name="btn_text_white">#ffffff</color>
     <color name="btn_bg_white">#ffffff</color>
+
+    <color name="task_bg_1">#ff7801</color>
+    <color name="task_bg_2">#ffaa20</color>
+    <color name="task_bg_3">#eab122</color>
+    <color name="task_bg_4">#ffdb3d</color>
+    <color name="task_bg_5">#ffee58</color>
 </resources>

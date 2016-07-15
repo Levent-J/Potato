@@ -15,13 +15,16 @@
         card_view:cardCornerRadius="0dp"
         card_view:cardElevation="4dp">
         <LinearLayout
+            android:id="@+id/card_layout"
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal">
             <TextView
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:textSize="14sp"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -30,13 +33,17 @@
                 android:textColor="@color/btn_text_white"
                 android:id="@+id/tv_task_item_title"/>
             <TextView
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:textSize="16sp"
                 android:gravity="center|top"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:singleLine="false"
-                android:text="message"
+                android:text="messagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessagemessage"
                 android:textColor="@color/btn_text_white"
                 android:id="@+id/tv_task_item_content"/>
         </LinearLayout>

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.levent_j.potato.R;
 import com.levent_j.potato.base.BaseActivity;
 import com.levent_j.potato.bean.Task;
+import com.levent_j.potato.utils.Util;
 
 import org.w3c.dom.Text;
 
@@ -95,6 +96,8 @@ public class EditTaskActivity extends BaseActivity{
             Task newTask = new Task();
             newTask.setTitle(title.getText().toString().trim());
             newTask.setMessage(content.getText().toString().trim());
+            newTask.setState(0);
+            newTask.setColor(Util.createRandomColor());
             newTask.setStudy(Double.valueOf(durationStudy.getText().toString().trim()));
             newTask.setReview(Double.valueOf(durationReview.getText().toString().trim()));
             newTask.setRest(Double.valueOf(durationRest.getText().toString().trim()));
