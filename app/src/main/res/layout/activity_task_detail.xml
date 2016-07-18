@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container">
     <RelativeLayout
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rl_show"
-        android:background="@color/colorPrimary">
-        <TextView
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textColor="@color/btn_text_white"
-            android:text="假装有图片"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+        android:background="@color/btn_bg_white">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/show_1"
+            android:id="@+id/iv_img"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_marginLeft="20dp"
@@ -77,8 +73,6 @@
                 android:paddingBottom="1dp"
                 android:paddingRight="2dp"
                 android:gravity="left|top"
-                android:backgroundTint="@color/btn_bg_white"
-                android:background="@drawable/editor_border"
                 android:id="@+id/tv_task_message"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
@@ -91,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
+            android:gravity="center|left"
             android:layout_weight="0.15">
             <ImageView
                 android:src="@drawable/ic_eat"
@@ -105,9 +99,18 @@
                 android:singleLine="true"
                 android:inputType="number"
                 android:id="@+id/tv_task_duration_study"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="啃土豆时间(分钟)"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="分钟"/>
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +120,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center|left"
+            >
             <ImageView
                 android:src="@drawable/ic_review"
                 android:tint="@color/colorPrimary"
@@ -130,9 +134,18 @@
                 android:singleLine="true"
                 android:inputType="number"
                 android:id="@+id/tv_task_duration_review"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="消化时间(分钟)"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="分钟"/>
         </LinearLayout>
 
         <LinearLayout
@@ -142,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center|left">
             <ImageView
                 android:src="@drawable/ic_rest"
                 android:tint="@color/colorPrimary"
@@ -155,9 +168,18 @@
                 android:singleLine="true"
                 android:inputType="number"
                 android:id="@+id/tv_task_duration_rest"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="休息这么久(分钟)"/>
+            <TextView
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:inputType="number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="分钟"/>
         </LinearLayout>
         <Button
             android:textColor="@color/btn_text_white"
@@ -165,7 +187,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:id="@+id/btn_task_start"
-            android:text="开始"
+            android:text="吃！"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp" />
         </LinearLayout>

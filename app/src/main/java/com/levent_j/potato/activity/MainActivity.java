@@ -67,13 +67,12 @@ public class MainActivity extends BaseActivity
     @Override
     protected void initData() {
 
-        //初始化adapter
+        /**初始化adapter*/
         adapter = new TaskAdapter(this);
         taskRecyclerView.setAdapter(adapter);
 
+        /**默认加载全部任务*/
         queryTasks(0);
-        //填充adapter
-
     }
 
     private void queryTasks(int state) {

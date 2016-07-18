@@ -3,7 +3,10 @@ package com.levent_j.potato.activity;
 import android.content.DialogInterface;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,7 +15,6 @@ import com.levent_j.potato.R;
 import com.levent_j.potato.base.BaseActivity;
 import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.utils.Util;
-import com.levent_j.potato.widget.CustomDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,21 +26,20 @@ import butterknife.OnClick;
  * Created by levent_j on 16-7-12.
  */
 public class TaskDetailActivity extends BaseActivity{
-    @Bind(R.id.tv_task_title)
-    TextView title;
+    @Bind(R.id.tv_task_title) TextView title;
     @Bind(R.id.tv_task_message) TextView content;
     @Bind(R.id.tv_task_duration_study) TextView durationStudy;
     @Bind(R.id.tv_task_duration_review) TextView durationReview;
     @Bind(R.id.tv_task_duration_rest) TextView durationRest;
-    @Bind(R.id.rl_show)
-    RelativeLayout imgLayout;
-    @Bind(R.id.ll_layout)
-    LinearLayout taskLayout;
+    @Bind(R.id.rl_show) RelativeLayout imgLayout;
+    @Bind(R.id.ll_layout) LinearLayout taskLayout;
+    @Bind(R.id.iv_img) ImageView showImg;
 
     private Timer timer;
     private TimerTask AfterStudyTask;
     private TimerTask AfterReviewTask;
     private TimerTask AfterRestTask;
+    private TimerTask ImgChangeTask;
     private android.os.Handler handler;
 
     private double StudyDuration;
@@ -47,17 +48,27 @@ public class TaskDetailActivity extends BaseActivity{
 
     private boolean canBack = true;
 
-    //振动器
+    /**振动器*/
     private Vibrator vibrator;
 
-    //振动时间
-    private long[] vibratorTimes = new long[]{1000,1000};
+    /**振动时间*/
+    private final static long[] VIBRATOR_TIMES = new long[]{1000,1000};
+    /**图片变换时间*/
+    private final static int CHANGE_IMG_DELAYS = 10000;
+    private final static int CHANGE_IMG_PERIOD = 10000;
 
-    //弹出框
-    private CustomDialog.Builder builder;
+    /**图片资源*/
+    private int[] imgs = {
+            R.drawable.show_1,
+            R.drawable.show_2,
+            R.drawable.show_3,
+            R.drawable.show_4,
+            R.drawable.show_5,
+            R.drawable.show_6,
+    };
 
-    //任务Task
-//    private Task task;
+    private int imgIndex = 1;
+
     private Long id;
 
     @Override
@@ -73,13 +84,14 @@ public class TaskDetailActivity extends BaseActivity{
 
         title.setText(task.getTitle());
         content.setText(task.getMessage());
-        durationStudy.setText(String.valueOf((int)task.getStudy())+"分钟");
-        durationReview.setText(String.valueOf((int)task.getReview())+"分钟");
-        durationRest.setText(String.valueOf((int)task.getRest())+"分钟");
+        durationStudy.setText(String.valueOf((int)task.getStudy()));
+        durationReview.setText(String.valueOf((int)task.getReview()));
+        durationRest.setText(String.valueOf((int)task.getRest()));
 
         StudyDuration = task.getStudy();
         ReviewDuration = task.getReview();
         RestDuration = task.getRest();
+
     }
 
 
@@ -93,36 +105,47 @@ public class TaskDetailActivity extends BaseActivity{
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        startVibrator("学习完毕");
+                        startVibrator("该消化啦！");
                         break;
                     case 2:
-                        startVibrator("复习完毕");
+                        startVibrator("该休息啦！");
                         break;
                     case 3:
-                        startVibrator("休息完毕");
+                        startVibrator("任务完成！");
+                        break;
+                    case 4:
+                        if (imgIndex>5){
+                            imgIndex=0;
+                        }
+                        Log.e("IMG","index="+imgIndex);
+                        showImg.setImageResource(imgs[imgIndex]);
+                        imgIndex++;
                         break;
                 }
 
             }
         };
+
+
     }
 
     private void startVibrator(final String s) {
 
-        //开始振动
-        vibrator.vibrate(vibratorTimes, 0);
+        /**开始振动*/
+        vibrator.vibrate(VIBRATOR_TIMES, 0);
 
-        CustomDialog.Builder builder = new CustomDialog.Builder(this);
-        CustomDialog customDialog = builder.setTitle("")
-                .setMessage("关闭振动吧！")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        /**创建dialog并监听返回键*/
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("醒一醒～")
+                .setMessage(s)
+                .setPositiveButton("好的", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         vibrator.cancel();
-                        if (s.equals("学习完毕")) {
+                        if (s.equals("该消化啦！")) {
                             timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
-                        } else if (s.equals("复习完毕")) {
+                        } else if (s.equals("该休息啦！")) {
                             timer.schedule(AfterRestTask, Util.Minute2Second(RestDuration));
                         } else {
                             taskLayout.setVisibility(View.VISIBLE);
@@ -131,13 +154,39 @@ public class TaskDetailActivity extends BaseActivity{
                         }
                     }
                 })
-                .create();
+                .setCancelable(false)
+                .create()
+                .setCanceledOnTouchOutside(false);
+        builder.show();
 
-        customDialog.setCanceledOnTouchOutside(false);
-        customDialog.show();
+//        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+//        CustomDialog customDialog = builder
+//                .setTitle("醒一醒～")
+//                .setMessage(s)
+//                .setPositiveButton("好的", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                        vibrator.cancel();
+//                        if (s.equals("该消化啦！")) {
+//                            timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
+//                        } else if (s.equals("该休息啦！")) {
+//                            timer.schedule(AfterRestTask, Util.Minute2Second(RestDuration));
+//                        } else {
+//                            taskLayout.setVisibility(View.VISIBLE);
+//                            imgLayout.setVisibility(View.GONE);
+//                            canBack = true;
+//                        }
+//                    }
+//                })
+//                .create();
+//        customDialog.setCancelable(false);
+//        customDialog.setCanceledOnTouchOutside(false);
+//        customDialog.show();
     }
 
 
+    /**初始化所有task*/
     private void initTask() {
         AfterStudyTask = new TimerTask() {
             @Override
@@ -165,12 +214,22 @@ public class TaskDetailActivity extends BaseActivity{
                 handler.sendMessage(message);
             }
         };
+
+        ImgChangeTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what =4;
+                handler.sendMessage(message);
+            }
+        };
     }
 
     @Override
     protected void setListener() {
     }
 
+    /**开始所有计时任务*/
     @OnClick(R.id.btn_task_start)
     public void startTask(View view){
         initTask();
@@ -178,6 +237,7 @@ public class TaskDetailActivity extends BaseActivity{
         taskLayout.setVisibility(View.GONE);
         canBack=false;
         timer.schedule(AfterStudyTask,  Util.Minute2Second(StudyDuration));
+        timer.schedule(ImgChangeTask, CHANGE_IMG_DELAYS,CHANGE_IMG_PERIOD);
         changeTaskState();
     }
 

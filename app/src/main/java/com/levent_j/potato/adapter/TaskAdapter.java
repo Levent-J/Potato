@@ -29,9 +29,8 @@ import butterknife.ButterKnife;
  */
 public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
 
-//    private int[] colors = new int[]{R.color.task_bg_1,R.color.task_bg_2,R.color.task_bg_3,R.color.task_bg_4,R.color.task_bg_5};
     private String[] colors = new String[]{
-        "#FF7801","#FFAA20","#EAB122"
+        "#8c591c","#8F5E22","#c18a46"
 };
 
     public TaskAdapter(Context context) {
