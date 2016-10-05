@@ -57,6 +57,10 @@ public class TaskDetailActivity extends BaseActivity{
     private final static int CHANGE_IMG_DELAYS = 10000;
     private final static int CHANGE_IMG_PERIOD = 10000;
 
+    private final static String MESSAGE_REVIEW="现在开始复习吧！";
+    private final static String MESSAGE_REST="学习了这么久，该休息一下啦，别玩手机哦";
+    private final static String MESSAGE_FINISH="任务完成！";
+
     /**图片资源*/
     private int[] imgs = {
             R.drawable.show_1,
@@ -105,13 +109,13 @@ public class TaskDetailActivity extends BaseActivity{
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
-                        startVibrator("该消化啦！");
+                        startVibrator(MESSAGE_REVIEW);
                         break;
                     case 2:
-                        startVibrator("该休息啦！");
+                        startVibrator(MESSAGE_REST);
                         break;
                     case 3:
-                        startVibrator("任务完成！");
+                        startVibrator(MESSAGE_FINISH);
                         break;
                     case 4:
                         if (imgIndex>5){
@@ -138,16 +142,16 @@ public class TaskDetailActivity extends BaseActivity{
 
         /**创建dialog并监听返回键*/
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("醒一醒～")
+        builder.setTitle("注意：")
                 .setMessage(s)
                 .setPositiveButton("好的", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         vibrator.cancel();
-                        if (s.equals("该消化啦！")) {
+                        if (s.equals(MESSAGE_REVIEW)) {
                             timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
-                        } else if (s.equals("该休息啦！")) {
+                        } else if (s.equals(MESSAGE_REST)) {
                             timer.schedule(AfterRestTask, Util.Minute2Second(RestDuration));
                         } else {
                             taskLayout.setVisibility(View.VISIBLE);
