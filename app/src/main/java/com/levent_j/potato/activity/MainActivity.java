@@ -1,6 +1,7 @@
 package com.levent_j.potato.activity;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -26,18 +27,17 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.rv_task_list) RecyclerView taskRecyclerView;
     @Bind(R.id.mr_main_refresh_main) MaterialRefreshLayout refreshLayout;
 
     private TaskAdapter adapter;
 
     private final static int RESULT_CODE = 1;
+
+    private static int TYPE_MODE = 0;
 
     @Override
     protected int setRootLayout() {
@@ -51,15 +51,11 @@ public class MainActivity extends BaseActivity
         taskRecyclerView.setHasFixedSize(true);
 
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
         refreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-                queryTasks(0);
+                queryTasks(TYPE_MODE);
             }
         });
     }
@@ -72,7 +68,7 @@ public class MainActivity extends BaseActivity
         taskRecyclerView.setAdapter(adapter);
 
         /**默认加载全部任务*/
-        queryTasks(0);
+        queryTasks(TYPE_MODE);
     }
 
     private void queryTasks(int state) {
@@ -95,20 +91,9 @@ public class MainActivity extends BaseActivity
         refreshLayout.finishRefresh();
     }
 
-
-    @Override
-    protected void setListener() {
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
     }
 
     @Override
@@ -127,40 +112,16 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_all) {
-            queryTasks(0);
+            TYPE_MODE=0;
         }else if (id == R.id.action_finished){
-            queryTasks(2);
+            TYPE_MODE=2;
         }else {
-            queryTasks(1);
+            TYPE_MODE=1;
         }
-
+        queryTasks(TYPE_MODE);
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-//        if (id == R.id.nav_camara) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
 
     @OnClick(R.id.fab)

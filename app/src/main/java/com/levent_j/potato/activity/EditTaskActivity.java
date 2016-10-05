@@ -62,10 +62,6 @@ public class EditTaskActivity extends BaseActivity{
     protected void initData() {
     }
 
-    @Override
-    protected void setListener() {
-
-    }
 
     @OnClick(R.id.btn_confirm)
     public void confirm(View view){

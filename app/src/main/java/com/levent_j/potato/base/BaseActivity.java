@@ -22,7 +22,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         initView();
         initData();
-        setListener();
         TAG = this.getClass().getSimpleName();
     }
 
@@ -32,13 +31,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initData();
 
-    protected abstract void setListener();
-
     public static Context getContext(){
         return getContext();
     }
 
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
 }

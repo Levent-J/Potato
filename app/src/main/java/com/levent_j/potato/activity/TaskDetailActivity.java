@@ -225,9 +225,6 @@ public class TaskDetailActivity extends BaseActivity{
         };
     }
 
-    @Override
-    protected void setListener() {
-    }
 
     /**开始所有计时任务*/
     @OnClick(R.id.btn_task_start)
