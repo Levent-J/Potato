@@ -131,8 +131,6 @@ public class TaskDetailActivity extends BaseActivity{
 
             }
         };
-
-
     }
 
     private void startVibrator(final String s) {
