@@ -118,7 +118,9 @@ public class TaskDetailActivity extends BaseActivity{
                             imgIndex=0;
                         }
                         Log.e("IMG","index="+imgIndex);
-                        showImg.setImageResource(imgs[imgIndex]);
+                        if (showImg!=null){
+                            showImg.setImageResource(imgs[imgIndex]);
+                        }
                         imgIndex++;
                         break;
                 }
@@ -158,31 +160,6 @@ public class TaskDetailActivity extends BaseActivity{
                 .create()
                 .setCanceledOnTouchOutside(false);
         builder.show();
-
-//        CustomDialog.Builder builder = new CustomDialog.Builder(this);
-//        CustomDialog customDialog = builder
-//                .setTitle("醒一醒～")
-//                .setMessage(s)
-//                .setPositiveButton("好的", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                        vibrator.cancel();
-//                        if (s.equals("该消化啦！")) {
-//                            timer.schedule(AfterReviewTask, Util.Minute2Second(ReviewDuration));
-//                        } else if (s.equals("该休息啦！")) {
-//                            timer.schedule(AfterRestTask, Util.Minute2Second(RestDuration));
-//                        } else {
-//                            taskLayout.setVisibility(View.VISIBLE);
-//                            imgLayout.setVisibility(View.GONE);
-//                            canBack = true;
-//                        }
-//                    }
-//                })
-//                .create();
-//        customDialog.setCancelable(false);
-//        customDialog.setCanceledOnTouchOutside(false);
-//        customDialog.show();
     }
 
 
@@ -251,5 +228,11 @@ public class TaskDetailActivity extends BaseActivity{
         if (canBack){
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }

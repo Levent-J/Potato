@@ -31,7 +31,7 @@
             android:id="@+id/et_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="土豆品种"/>
+            android:hint="土豆名字"/>
 
     </LinearLayout>
 
@@ -71,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center|left">
+        android:gravity="center">
         <ImageView
             android:src="@drawable/ic_eat"
             android:tint="@color/colorPrimary"
@@ -107,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center|left">
+        android:gravity="center">
         <ImageView
             android:src="@drawable/ic_review"
             android:tint="@color/colorPrimary"
@@ -143,7 +143,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center|left">
+        android:gravity="center">
         <ImageView
             android:src="@drawable/ic_rest"
             android:tint="@color/colorPrimary"

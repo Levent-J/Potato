@@ -2,21 +2,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container">
     <RelativeLayout
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rl_show"
-        android:background="@color/btn_bg_white">
+        android:background="@color/colorPrimary">
         <ImageView
+            android:background="@drawable/bg_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/show_1"
-            android:id="@+id/iv_img"/>
+            android:id="@+id/iv_img" />
     </RelativeLayout>
     <LinearLayout
+        android:visibility="visible"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:id="@+id/ll_layout"
@@ -46,7 +50,7 @@
                 android:singleLine="true"
                 android:maxLength="10"
                 android:id="@+id/tv_task_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="土豆品种"/>
 
@@ -58,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:layout_weight="0.15">
             <ImageView
                 android:tint="@color/colorPrimary"
@@ -74,8 +78,8 @@
                 android:paddingRight="2dp"
                 android:gravity="left|top"
                 android:id="@+id/tv_task_message"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:hint="土豆详情"/>
         </LinearLayout>
 
@@ -85,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center|left"
+            android:gravity="center"
             android:layout_weight="0.15">
             <ImageView
                 android:src="@drawable/ic_eat"
@@ -120,8 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center|left"
-            >
+            android:gravity="center">
             <ImageView
                 android:src="@drawable/ic_review"
                 android:tint="@color/colorPrimary"
@@ -155,7 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center|left">
+            android:gravity="center">
             <ImageView
                 android:src="@drawable/ic_rest"
                 android:tint="@color/colorPrimary"
@@ -181,15 +184,22 @@
                 android:layout_height="wrap_content"
                 android:hint="分钟"/>
         </LinearLayout>
-        <Button
-            android:textColor="@color/btn_text_white"
-            android:background="@drawable/bg_btn"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
+
+        <info.hoang8f.widget.FButton
             android:id="@+id/btn_task_start"
             android:text="吃！"
+            fbutton:buttonColor="@color/colorPrimary"
+            fbutton:shadowColor="@color/colorPrimaryDark"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_height="wrap_content"
+            android:layout_width="138dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"
+            fbutton:cornerRadius="5dp"
+            android:textSize="16sp"
+            android:textColor="@color/btn_text_white"/>
         </LinearLayout>
 
 

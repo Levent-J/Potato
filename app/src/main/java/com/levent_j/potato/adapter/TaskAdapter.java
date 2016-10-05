@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -100,12 +101,14 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
                 }
             });
             /**长按弹出任务操作提示框*/
+
             cardView.setOnLongClickListener(new View.OnLongClickListener() {
+
                 @Override
                 public boolean onLongClick(View v) {
-                    CustomDialog.Builder mDialog = new CustomDialog.Builder(context);
-                    mDialog.setTitle("提示")
-                            .setMessage("对于这颗土豆，你要...")
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("提示")
+                            .setMessage("你要对这颗土豆做什么?")
                             .setPositiveButton("扔掉", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -128,8 +131,8 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
                                     dialog.dismiss();
                                 }
                             })
-                            .create()
-                            .show();
+                            .create();
+                    builder.show();
                     return false;
                 }
             });
