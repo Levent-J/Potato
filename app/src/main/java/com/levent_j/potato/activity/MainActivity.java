@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +22,7 @@ import com.levent_j.potato.adapter.TaskAdapter;
 import com.levent_j.potato.base.BaseActivity;
 import com.levent_j.potato.bean.Task;
 import com.levent_j.potato.utils.SGDecoration;
+import com.levent_j.potato.utils.ToastUtils;
 
 import java.util.List;
 
@@ -69,6 +71,8 @@ public class MainActivity extends BaseActivity {
 
         /**默认加载全部任务*/
         queryTasks(TYPE_MODE);
+
+//        ToastUtils.msg("测试版本，时间单位暂时为秒");
     }
 
     private void queryTasks(int state) {
@@ -133,6 +137,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Main","加载了一遍数据");
         if (data!=null){
             Task task = data.getParcelableExtra("Task");
             adapter.appendData(task);

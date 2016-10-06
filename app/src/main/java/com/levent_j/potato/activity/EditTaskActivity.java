@@ -51,9 +51,9 @@ public class EditTaskActivity extends BaseActivity{
             task = getIntent().getParcelableExtra("Task");
             title.setText(task.getTitle());
             content.setText(task.getMessage());
-            durationStudy.setText(String.valueOf(task.getStudy()));
-            durationReview.setText(String.valueOf(task.getReview()));
-            durationRest.setText(String.valueOf(task.getRest()));
+            durationStudy.setText(String.valueOf((int)task.getStudy()));
+            durationReview.setText(String.valueOf((int)task.getReview()));
+            durationRest.setText(String.valueOf((int)task.getRest()));
             isEdit = true;
         }
     }
@@ -72,7 +72,6 @@ public class EditTaskActivity extends BaseActivity{
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("Task", getTask());
             setResult(RESULT_CODE, intent);
-
             finish();
         }
     }

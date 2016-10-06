@@ -1,5 +1,6 @@
 package com.levent_j.potato.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,7 +35,7 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
         "#8c591c","#8F5E22","#c18a46"
 };
 
-    public TaskAdapter(Context context) {
+    public TaskAdapter(Activity context) {
         super(context);
     }
 
@@ -64,6 +65,9 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
     }
 
     class mViewHolder extends RecyclerView.ViewHolder{
+
+        private static final int RESULT_CODE = 1;
+
         @Bind(R.id.tv_task_item_title)
         TextView title;
         @Bind(R.id.tv_task_item_content)
@@ -127,7 +131,8 @@ public class TaskAdapter extends BaseAdapter<Task,TaskAdapter.mViewHolder>{
                                     intent.putExtra("Edit", true);
                                     intent.putExtra("id", task.getId());
                                     Log.e("Edit", "id=" + task.getId());
-                                    context.startActivity(intent);
+                                    context.startActivityForResult(intent,RESULT_CODE);
+//                                    context.startActivity(intent);
                                     dialog.dismiss();
                                 }
                             })

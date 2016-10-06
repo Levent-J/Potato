@@ -1,5 +1,6 @@
 package com.levent_j.potato.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -13,9 +14,9 @@ import java.util.List;
 public abstract class BaseAdapter<T,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>{
 
     public List<T> datas;
-    public Context context;
+    public Activity context;
 
-    public BaseAdapter(Context context){
+    public BaseAdapter(Activity context){
         this.context = context;
         datas = new ArrayList<>();
     }
