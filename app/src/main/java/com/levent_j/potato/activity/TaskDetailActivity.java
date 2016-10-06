@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.levent_j.potato.R;
@@ -31,9 +30,10 @@ public class TaskDetailActivity extends BaseActivity{
     @Bind(R.id.tv_task_duration_study) TextView durationStudy;
     @Bind(R.id.tv_task_duration_review) TextView durationReview;
     @Bind(R.id.tv_task_duration_rest) TextView durationRest;
-    @Bind(R.id.rl_show) RelativeLayout imgLayout;
+    @Bind(R.id.rl_show) LinearLayout imgLayout;
     @Bind(R.id.ll_layout) LinearLayout taskLayout;
-    @Bind(R.id.iv_img) ImageView showImg;
+    @Bind(R.id.tv_detail_state) TextView showText;
+    @Bind(R.id.iv_detail_img) ImageView showImg;
 
     private Timer timer;
     private TimerTask AfterStudyTask;
@@ -63,12 +63,12 @@ public class TaskDetailActivity extends BaseActivity{
 
     /**图片资源*/
     private int[] imgs = {
-            R.drawable.show_1,
-            R.drawable.show_2,
-            R.drawable.show_3,
-            R.drawable.show_4,
-            R.drawable.show_5,
-            R.drawable.show_6,
+            R.drawable.i1,
+            R.drawable.i2,
+            R.drawable.i3,
+            R.drawable.i4,
+            R.drawable.i5,
+            R.drawable.i6,
     };
 
     private int imgIndex = 1;
@@ -109,12 +109,15 @@ public class TaskDetailActivity extends BaseActivity{
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
+                        showText.setText("复习时间～");
                         startVibrator(MESSAGE_REVIEW);
                         break;
                     case 2:
+                        showText.setText("休息时间～");
                         startVibrator(MESSAGE_REST);
                         break;
                     case 3:
+                        showText.setText("结束了～");
                         startVibrator(MESSAGE_FINISH);
                         break;
                     case 4:
@@ -155,6 +158,7 @@ public class TaskDetailActivity extends BaseActivity{
                             taskLayout.setVisibility(View.VISIBLE);
                             imgLayout.setVisibility(View.GONE);
                             canBack = true;
+                            finish();
                         }
                     }
                 })

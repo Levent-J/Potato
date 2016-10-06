@@ -4,19 +4,32 @@
     android:layout_height="match_parent"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container">
-    <RelativeLayout
+    <LinearLayout
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rl_show"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_detail_state"
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="学习时间～"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/btn_text_white"/>
         <ImageView
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center"
             android:background="@drawable/bg_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/show_1"
-            android:id="@+id/iv_img" />
-    </RelativeLayout>
+            android:layout_width="340dp"
+            android:layout_height="340dp"
+            android:src="@drawable/i1"
+            android:id="@+id/iv_detail_img" />
+    </LinearLayout>
     <LinearLayout
         android:visibility="visible"
         android:paddingTop="20dp"
