@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         android:name="com.orm.SugarApp">
 
-        <meta-data android:name="DATABASE" android:value="test1.db"/>
+        <meta-data android:name="DATABASE" android:value="test2.db"/>
         <meta-data android:name="VERSION" android:value="1"/>
         <meta-data android:name="QUERY_LOG" android:value="true"/>
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.levent_j.potato"/>
